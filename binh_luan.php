@@ -1,14 +1,14 @@
 <?php
 
-// Lấy tất cả các bình luận
-function getListComment($id){
+// Lấy tất cả các bình luận theo id truyện
+function getListComment($id_truyen){
     global $objConn;
     try{
         $selectAllComment = "SELECT tb_binh_luan.*, tb_truyen.ten_truyen, tb_user.username
         FROM tb_binh_luan 
         INNER JOIN tb_truyen ON tb_binh_luan.id_truyen = tb_truyen.id
         INNER JOIN tb_user ON tb_binh_luan.id_user = tb_user.id
-        WHERE tb_binh_luan.id_truyen = $id
+        WHERE tb_binh_luan.id_truyen = $id_truyen
         ";
 
         // prepare(chuẩn bị) cho cú pháp
@@ -36,6 +36,7 @@ function getListComment($id){
        }
 }
 
+// Thêm bình uận
 function addComment($id_truyen, $id_user){
     global $objConn;
 
@@ -43,7 +44,6 @@ function addComment($id_truyen, $id_user){
 
     $ngay_gio = date('Y-m-d');
 
-            // đã nhập username rồi ==> lưu vào CSDL
             try {
                 $addNewComment =  "INSERT INTO tb_binh_luan(id_truyen, id_user, noi_dung, ngay_gio) VALUES (:id_truyen,:id_user,:noi_dung,:ngay_gio)";
                 $stmt =  $objConn->prepare($addNewComment);
@@ -73,6 +73,7 @@ function addComment($id_truyen, $id_user){
         die(json_encode ($dataRes ));
 }
 
+// Xoá bình luận
 function deleteComment($id){
     global $objConn;
     try {
@@ -88,14 +89,12 @@ function deleteComment($id){
          die(   json_encode($dataRes) );  
          
     } catch (PDOException $e) {
-        //  die( 'Lỗi thực hiện truy vấn CSLD ' . $e->getMessage()  );
-         $dataRes = [
-            'status'=> 0,
-            'msg'=> 'Thất bại',
-        ];
+         die( 'Lỗi thực hiện truy vấn CSLD ' . $e->getMessage()  );
+        
     }
 }
 
+// Sửa bình luận
 function updateComment($id){
     global $objConn;
 
