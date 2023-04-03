@@ -134,8 +134,8 @@ function updateUser($id){
     parse_str(file_get_contents('php://input'), $_PUT);
     
     $passwdUpdate = $_PUT['passwd'];
-    $emailUpdate = $_PUT['passwd'];
-    $fullnameUpdate = $_PUT['passwd'];
+    $emailUpdate = $_PUT['email'];
+    $fullnameUpdate = $_PUT['fullname'];
 
         try {
             $updateUser =  "UPDATE `tb_user` SET `passwd`=:passUpdate, `email`=:emailUpdate, `fullname`=:fullnameUpdate WHERE id = $id";
@@ -170,7 +170,7 @@ function updateUser($id){
 $method = $_SERVER['REQUEST_METHOD']; // yêu cầu kiểu request
 if( $method == 'GET'){
     if(empty($_GET['id'])) // không có id là trang danh sách, có id là chi tiết
-        getListUsers(); // gọi hàm listAll;
+        getListUsers();
     else{
         getIDUser($_GET['id']);
     }
