@@ -127,7 +127,7 @@ function deleteTruyen($id){
 
 }
 
-// Sửa user
+// Sửa truyện
 function updateTruyen($id){
     global $objConn;
 
@@ -170,7 +170,7 @@ function updateTruyen($id){
 $method = $_SERVER['REQUEST_METHOD']; // yêu cầu kiểu request
 if( $method == 'GET'){
     if(empty($_GET['id'])) // không có id là trang danh sách, có id là chi tiết
-        getListTruyen(); // gọi hàm listAll;
+        getListTruyen();
     else{
         getIDTruyen($_GET['id']);
     }
